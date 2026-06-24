@@ -1,10 +1,12 @@
 import { Hono } from 'hono'
-import { drizzle } from 'drizzle-orm/vercel-postgres'
 import seatBookingRouter from './routes/seat-booking.route'
 
-const app = new Hono()
-export const db = drizzle(process.env.DATABASE_URL!)
+type Bindings = {
+  DATABASE_URL: string
+}
 
-app.route("/v1/api", seatBookingRouter);
+const app = new Hono<{ Bindings: Bindings }>()
+
+app.route("/v1/api", seatBookingRouter)
 
 export default app

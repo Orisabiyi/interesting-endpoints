@@ -4,7 +4,7 @@ import { pgTable, integer, varchar, timestamp, unique } from 'drizzle-orm/pg-cor
 export const seatBookingTable = pgTable('booking', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   showtimeId: integer('showtime_id').notNull(),
-  status: varchar('status', { enum: ['booked', 'cancelled'] }).notNull(),
+  status: varchar('status', { enum: ["booked", "cancelled", "available"] }).notNull().default("available"),
   seatNumber: integer('seat_number').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 }, (table) => ({
