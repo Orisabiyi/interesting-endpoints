@@ -1,13 +1,14 @@
 import { Context } from "hono";
 import { seatBookingTable } from "../models/schema";
+import { db } from "..";
 
 export async function bookSeat(context: Context) {
   try {
-    const { seatId, seatNumber } = await context.req.json();
-    const result = await context.env.db.insert(seatBookingTable).values({
-      seatId,
+    const { showtimeId, seatNumber, status } = await context.req.json();
+    const result = await db.insert(seatBookingTable).values({
+      showtimeId,
       seatNumber,
-      status: 'booked',
+      status,
     });
 
     return context.json(result, 201);
